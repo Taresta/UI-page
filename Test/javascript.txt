@@ -1,0 +1,112 @@
+// var addToCartButton = document.getElementsByClassName('add-to-cart');
+/*When the user hovers over the add to cart button, it changes to red color with a + and - for adding product qnatities 
+There is going to be a num between + and - like - num +, whose value will change according to how many times a user
+has clicked the + and - button, but never less than 0*/
+
+/*This part deals with the button appearance. */
+// Define the event handler function
+
+
+/*To integrate removeEvent Listener functionality, we need to make sure that the event handler 
+function is named and referenced properly */
+function handleAddToCartClick() {
+    const button  = this; //this refers to the clicked button
+    button.classList.add('active');
+    const quantityControl = button.querySelector('.quantity-control');
+    const addIcon = button.querySelector('.add-icon');
+    const addText = button.querySelector('.add-text');
+    if (button.classList.contains('active')) {
+        quantityControl.style.display = 'flex';
+        addIcon.style.display = 'none';
+        addText.style.display = 'none';
+        button.style.backgroundColor = 'red';
+        button.removeEventListener('click', handleAddToCartClick);
+    } else {
+        quantityControl.style.display = 'none';
+        addIcon.style.display = 'inline-block';
+        addText.style.display = 'inline-block';
+        button.style.backgroundColor = '';
+    }
+}
+let addToCartButtons = document.querySelectorAll('.add-to-cart');
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', handleAddToCartClick);
+})
+class Product {
+    constructor(name, quantity, price) {
+        this._name = name;
+        this._quantity = quantity;
+        this._price = price;
+    }
+    get name() {
+        return this._name;
+    }
+    get quantity() {
+        return this._quantity;
+    }
+    get price() {
+        return this._price;
+    }
+    set name(name) {
+        this._name = name;
+    }
+    set quantity(quantity) {
+        this._quantity = quantity;
+    }
+    set price(price) {
+        this._price = price;
+    }
+    total() {
+        return this._quantity * this._price;
+    }
+}
+
+/*When the user clicks the add to cat button, the quantity can start with one, which will make the product added in the
+cart */
+let cart = [];
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', function() { 
+         // We need to find the proper way to get the productElement, using closest in this case is not correct
+        let productElement = button.closest('.dessert');
+        let productName = productElement.querySelector('.dessert-full-name').innerText;
+        let quantity = 1;
+        // Same goes here, using colsest is not correct. Ask Shifu for guidance.
+        let priceText = productElement.querySelector('.dessert-price').innerText;
+        // Here the text will return the $ sign as well, to get just the number, we need to parse it. Ask Shifu for help.
+        let price = parseFloat(priceText.replace(/[^\d.]/g, ''));
+        let selectedProduct = new Product(productName, quantity, price);
+        cart.push(selectedProduct);
+        console.log('Cart Array' , cart);
+        });
+});
+    
+document.querySelectorAll('.quantity-modifier').forEach(modifier => {
+    modifier.addEventListener('click', function() {
+        let quantityControlElement = modifier.closest('.quantity-control');
+        let quantitySpan = quantityControlElement.querySelector('.quantity');
+        //Modify the cart array based on the current quantity
+        let parentDessertElement = modifier.closest('.dessert');
+        let productName = parentDessertElement.querySelector('.dessert-full-name').innerText;
+        console.log(productName);
+        let productIndex = cart.findIndex((product) => product.name === productName);
+        console.log(productIndex);
+        if (productIndex === -1) {
+            console.error(`Product "${productName}" not found in the cart`);
+            return; // Exit early if the product is not in the cart
+        }
+    
+        let currentQuantity = parseInt(quantitySpan.innerText);
+            
+        if (modifier.classList.contains('increment')) {
+            
+            quantitySpan.innerText = ++currentQuantity;
+
+        } else if (modifier.classList.contains('decrement')) {
+           
+            if (currentQuantity > 0) {
+                quantitySpan.innerText = --currentQuantity;
+            } 
+        }
+        cart[productIndex].quantity = currentQuantity;
+    });
+});

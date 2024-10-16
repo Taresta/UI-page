@@ -1,0 +1,210 @@
+@font-face {
+    font-family: "Red Hat Text";
+    src: url('../assets/fonts/RedHatText-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight:400 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Red Hat Text";
+    src: url('../assets/fonts/RedHatText-Italic-VariableFont_wght.ttf')  format('truetype-variations');
+    font-weight: 400 700;
+    font-style: italic;
+}
+:root {
+    --main-redColor: hsl(14, 86%, 42%);
+    --main-greenColor:  hsl(159, 69%, 38%);
+    --first-roseColor: hsl(20, 50%, 98%);
+    --second-roseColor:hsl(13, 31%, 94%);
+    --third-roseColor:hsl(14, 25%, 72%);
+    --fourth-roseColor: hsl(7, 20%, 60%);
+    --fifth-roseColor:hsl(12, 20%, 44%);
+    --sixth-roseColor:hsl(14, 65%, 9%);
+    --font-size: 16px;
+    --main-font: "Red Hat Text", sans-serif;
+}
+html {
+    font-family: var(--main-font), serif;
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: var(--first-roseColor);
+}
+
+main {
+    display:grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  This is just an alternative*/
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    
+}
+
+.dessert-list {
+    grid-column: span 9;
+}
+.dessert-list h2 {
+    font-size: clamp(1rem, 1.5rem + 1vw, 2rem);
+    color: var(--sixth-roseColor);
+}
+.products-container{
+   
+    width: 100%; 
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    /* grid-template-columns: repeat(12, 1fr); This is just an alternative*/
+    grid-template-rows: auto;
+    grid-gap: 1.5rem;
+}
+.dessert {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+    
+}
+
+.image-button {
+   position:relative;
+   margin-bottom:2.5rem;
+}
+.image-button img {
+   max-width: 100%;
+   
+}
+.image-button .add-to-cart {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 0.8rem 1.5rem;
+    background-color: hsl(0, 0%, 100%); 
+    border: 1px solid var(--sixth-roseColor);
+    border-radius:2rem;
+    position: absolute;
+    left:50%;
+    bottom:0;
+    transform: translate(-50%,50%);
+    text-align: center;
+    
+}
+.add-to-cart:hover {
+    cursor:pointer;
+}
+.add-to-cart .add-icon {
+    padding-right: 0.5rem; 
+}
+.add-to-cart .add-text {
+    display:inline-block;
+    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+    font-weight: 600;
+   
+}
+/* Add styles for quantity modifier here */
+.add-to-cart .add-icon, 
+.add-to-cart .add-text {
+    display:inline-block;
+}
+.add-to-cart .quantity-control{
+    display:none;
+    
+}
+.add-to-cart.active .add-icon,
+.add-to-cart.active .add-text{
+    display:none;
+}
+.add-to-cart.active {
+    background-color: var(--main-redColor);
+}
+.add-to-cart.active .quantity-control{
+    flex-grow: 1;
+   display: flex;
+   justify-content: space-around;
+}
+
+.quantity-control .quantity-modifier{
+    padding:0.2rem;
+    border:2px solid white;
+    border-radius: 50%;
+}
+.quantity-modifier .cls-1 {
+    fill: white; 
+}
+.quantity-modifier:hover {
+    background-color: white;
+}
+.quantity-modifier:hover .cls-1{
+    fill: red;
+}
+/* Next we need to stylize the add-to-cart button properly. How about using a absolute or relative position for quantity control div */
+.dessert-name {
+    color: var(--third-roseColor);
+}
+.dessert-full-name{
+    color:var(--sixth-roseColor);
+    font-weight:650;
+    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+}
+.dessert-price {
+    color: var(--main-redColor);
+    font-weight: 500;
+}
+
+#cart-section{
+    grid-column: span 3;
+    padding: 0.5rem;
+    background-color: white;
+}
+
+#cart-section h3 {
+    color: var(--main-redColor);
+    justify-self: start;
+}
+.cart-item .icon-remove-item {
+    cursor: pointer;
+}
+
+.model{
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    position: fixed;
+    top:0;
+    left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6) /*Add a dark overlay*/
+}
+.model .confirmation-model {
+    background-color: var(--first-roseColor);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width:90%;
+}
+
+.model-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0;
+
+}
+
+.confirm-order, .start-new-order {
+    text-align: center;
+    background-color: var(--main-redColor);
+    border-radius: 2rem;
+    color: var(--first-roseColor);
+    padding: 1rem;
+    margin-top: 1rem;
+    cursor:pointer;
+}
+.confirm-order:hover, .start-new-order:hover {
+    background-color: var(--fifth-roseColor);
+}
+/* We will make a container for the image and button. The container can have a realtive position, so the 
+button can be given absolute posiyion. This way is better using a container because it will keep the image
+and button together. */
+/* The design is not as responsive as of yet beause we are using 12 columns for all screen sizes. 
+Need to add media queries for responsive design. */
