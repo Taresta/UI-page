@@ -162,49 +162,28 @@ main {
     cursor: pointer;
 }
 
-.model{
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-    position: fixed;
-    top:0;
-    left:0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.6) /*Add a dark overlay*/
-}
-.model .confirmation-model {
-    background-color: var(--first-roseColor);
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    max-width:90%;
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
 }
 
-.model-item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0.5rem 0;
-
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
 }
 
-.confirm-order, .start-new-order {
-    text-align: center;
-    background-color: var(--main-redColor);
-    border-radius: 2rem;
-    color: var(--first-roseColor);
-    padding: 1rem;
-    margin-top: 1rem;
-    cursor:pointer;
-}
-.confirm-order:hover, .start-new-order:hover {
-    background-color: var(--fifth-roseColor);
-}
 /* We will make a container for the image and button. The container can have a realtive position, so the 
 button can be given absolute posiyion. This way is better using a container because it will keep the image
 and button together. */
 /* The design is not as responsive as of yet beause we are using 12 columns for all screen sizes. 
-Need to add media queries for responsive design. */
+Need to add media queries for responsive design. \*/

@@ -348,4 +348,65 @@ function detachQuantityListeners(product, index) {
     }
 }
 
-//Problem is with the index being passed. It is zero in every case
+// Attach the event listener to the order summary
+const orderSummary = document.getElementById('order-summary');
+orderSummary.addEventListener('click', (event) => {
+    // Check if the clicked element has the class 'checkout-btn'
+    if (event.target.matches('.checkout-btn')) {
+        // Call the function to display the modal
+        displayCheckoutModal();
+    }
+});
+
+function displayCheckoutModal() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        displayOrderDetails();
+    } else {
+        console.error('Checkout modal element not found');
+    }
+}
+
+function displayOrderDetails() {
+    const orderDetails = document.getElementById('order-details');
+
+    if (orderDetails) {
+        orderDetails.innerHTML = '';
+        cart.forEach(product => {
+            const orderDetailsHTML = `
+                <div class="order-item">
+                    <img src="${product.image.thumbnail || 'path/to/fallback/image.jpg'}" alt="${product.name}">
+                    <p>${product.name}</p>
+                    <span>${product.quantity}x</span>
+                    <span>@ $${product.price.toFixed(2)}</span>
+                    <span>Total: $${product.total().toFixed(2)}</span>
+                </div>`;
+            orderDetails.insertAdjacentHTML('beforeend', orderDetailsHTML);
+        });
+    } else {
+        console.error('Order details element not found');
+    }
+
+}
+
+const startNewButton = document.getElementById('start-new-order');
+startNewButton.addEventListener('click', () => {
+    resetOrder();
+});
+
+function resetOrder() {
+    cart = [];
+    // Update the UI to reflect an empty cart
+    updateCartUI();
+    // Hide the modal
+    productArray.forEach((product, index) => {
+        product.quantity = 0;
+        updateProductUI(product, index);
+    })
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    console.log('Order has been reset');
+}
