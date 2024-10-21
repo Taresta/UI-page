@@ -3,14 +3,14 @@
     src: url('../assets/fonts/RedHatText-VariableFont_wght.ttf') format('truetype-variations');
     font-weight:400 700;
     font-style: normal;
-}
-@font-face {
+  }
+  @font-face {
     font-family: "Red Hat Text";
     src: url('../assets/fonts/RedHatText-Italic-VariableFont_wght.ttf')  format('truetype-variations');
     font-weight: 400 700;
     font-style: italic;
-}
-:root {
+  }
+  :root {
     --main-redColor: hsl(14, 86%, 42%);
     --main-greenColor:  hsl(159, 69%, 38%);
     --first-roseColor: hsl(20, 50%, 98%);
@@ -21,61 +21,59 @@
     --sixth-roseColor:hsl(14, 65%, 9%);
     --font-size: 16px;
     --main-font: "Red Hat Text", sans-serif;
-}
-html {
+  }
+  html {
     font-family: var(--main-font), serif;
     box-sizing: content-box;
     padding: 0;
     margin: 0;
     border: 0;
     background-color: var(--first-roseColor);
-}
+  }
 
-main {
-    display:grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  This is just an alternative*/
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 1.5rem;
-    
-}
-
-.dessert-list {
-    grid-column: span 9;
-}
-.dessert-list h2 {
+  /* Mobile First Grid Layout */
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  /* .dessert-list h2 {
     font-size: clamp(1rem, 1.5rem + 1vw, 2rem);
     color: var(--sixth-roseColor);
-}
-.products-container{
-   
-    width: 100%; 
+  }
+   */
+  .products-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    /* grid-template-columns: repeat(12, 1fr); This is just an alternative*/
-    grid-template-rows: auto;
-    grid-gap: 1.5rem;
-}
-.dessert {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .dessert {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.3rem;
     
-}
-
-.image-button {
-   position:relative;
-   margin-bottom:2.5rem;
-}
-.image-button img {
-   max-width: 100%;
-   
-}
-.image-button .add-to-cart {
+  }
+  /* Default styling for .image-button */
+  .image-button {
+    width:100%;
+    position:relative;
+    margin-bottom:1rem;
+  }
+  
+   .image-button img {
+    max-width: 100%;
+   }
+   .product-image.show-border {
+    border: 2px solid var(--main-redColor);
+    border-radius: 1rem;
+   }
+  /* Adjust .add-to-cart styles for all screen sizes */
+  .image-button .add-to-cart {
     display: flex;
     justify-content: center;
-    width: 50%;
-    padding: 0.8rem 1.5rem;
+    width: 60%;
+    padding:0.5rem;
     background-color: hsl(0, 0%, 100%); 
     border: 1px solid var(--sixth-roseColor);
     border-radius:2rem;
@@ -85,105 +83,302 @@ main {
     transform: translate(-50%,50%);
     text-align: center;
     
-}
-.add-to-cart:hover {
+  }
+  .add-to-cart:hover {
     cursor:pointer;
-}
-.add-to-cart .add-icon {
+  }
+  .add-to-cart .add-icon {
     padding-right: 0.5rem; 
-}
-.add-to-cart .add-text {
+  }
+  .add-to-cart .add-text {
     display:inline-block;
     font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
     font-weight: 600;
    
-}
-/* Add styles for quantity modifier here */
-.add-to-cart .add-icon, 
-.add-to-cart .add-text {
+  }
+  /* Add styles for quantity modifier here */
+  .add-to-cart .add-icon, 
+  .add-to-cart .add-text {
     display:inline-block;
-}
-.add-to-cart .quantity-control{
+  }
+  .add-to-cart .quantity-control{
     display:none;
     
-}
-.add-to-cart.active .add-icon,
-.add-to-cart.active .add-text{
+  }
+  .add-to-cart.active .add-icon,
+  .add-to-cart.active .add-text{
     display:none;
-}
-.add-to-cart.active {
+  }
+  .add-to-cart.active {
     background-color: var(--main-redColor);
-}
-.add-to-cart.active .quantity-control{
+    
+  }
+  
+  .add-to-cart.active .quantity-control{
     flex-grow: 1;
    display: flex;
-   justify-content: space-around;
-}
-
-.quantity-control .quantity-modifier{
+   justify-content: space-between;
+  }
+  
+  .quantity-control .quantity-modifier{
     padding:0.2rem;
     border:2px solid white;
     border-radius: 50%;
-}
-.quantity-modifier .cls-1 {
+  }
+  .quantity-modifier .cls-1 {
     fill: white; 
-}
-.quantity-modifier:hover {
+  }
+  .quantity-modifier:hover {
     background-color: white;
-}
-.quantity-modifier:hover .cls-1{
+  }
+  .quantity-modifier:hover .cls-1{
     fill: red;
-}
-/* Next we need to stylize the add-to-cart button properly. How about using a absolute or relative position for quantity control div */
-.dessert-name {
+  }
+  .dessert-name {
     color: var(--third-roseColor);
-}
-.dessert-full-name{
+  }
+  .dessert-full-name{
     color:var(--sixth-roseColor);
     font-weight:650;
     font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
-}
-.dessert-price {
+  }
+  .dessert-price {
     color: var(--main-redColor);
     font-weight: 500;
-}
-
-#cart-section{
-    grid-column: span 3;
-    padding: 0.5rem;
+  }
+  #cart-section{
+    position: static;
     background-color: white;
-}
-
-#cart-section h3 {
+    padding: 1rem;
+  }
+  #cart-section h3 {
     color: var(--main-redColor);
     justify-self: start;
+  }
+  .cart-item {
+   border-bottom: 2px solid var(--first-roseColor);
+  }
+  
+  .cart-item-details {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "Product-Name Product-Name Product-Name Product-Name Product-Name . Remove-Icon"
+                          "Product-Quantity Product-Price Product-Price Product-Total  . . Remove-Icon";
+  }
+  .cart-item-name {
+    grid-area: Product-Name;
+  }
+  .cart-item-quantity {
+    grid-area:Product-Quantity;
+ }
+ .cart-item-price {
+  grid-area: Product-Price;
+  justify-self: center;
+ }
+ .cart-item-total {
+  grid-area: Product-Total;
+ }
+ .icon-remove-item {
+  grid-area: Remove-Icon;
+  align-self: center;
+  cursor: pointer;
+ }
+#order-summary {
+  text-align: center;
 }
-.cart-item .icon-remove-item {
-    cursor: pointer;
-}
+ #carbon-neutral-container {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: var(--first-roseColor);
+ }
 
-.modal {
+ .checkout-btn {
+  background-color: var(--main-redColor);
+  color : white;
+  border : 1px solid var(--sixth-roseColor);
+  border-radius: 2rem;
+  padding: 0.5rem 5rem;
+  cursor: pointer;
+ }
+  .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    height: 100%; /*Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
-}
-
-.modal-content {
+    box-shadow:0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* When the modal is shown */
+  .modal.show {
+    display: block;
+    opacity: 1;
+  }
+  .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 0; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
+    border-radius: 1rem;
+    width: 100%; /* Could be more or less, depending on screen size */
+    animation: slidedown 0.5s ease-in-out;
+  }
+  #order-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: var(--first-roseColor);
+    padding: 1rem;
+  }
+  
+  #order-details .order-item {
+    display: grid;
+    grid-template-columns:  repeat(12, 1fr); 
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0px 10px;
+    align-items: center;
+    grid-template-areas: "Image Image Image Product-Name Product-Name Product-Name Product-Name Product-Name Product-Name Product-Name  Total Total"
+                        "Image Image Image Quantity Price Price Price . . . Total Total"; 
+  
+  }
+  
+  .order-item .modal-thumbail-image {
+    grid-area: Image;
+    object-fit: cover;
+    width: 100%;
+  }
+  .order-item .modal-product-name {
+    grid-area: Product-Name;
+  }
+  .order-item .modal-product-quantity {
+    grid-area: Quantity;
+    color: var(--main-redColor);
+    font-weight: 600;
+  }
+  .order-item .modal-product-price {
+    grid-area: Price;
+  }
+  .order-item .modal-product-total {
+    grid-area: Total;
+    place-self: center;
+    font-weight: 700;
+  }
 
-/* We will make a container for the image and button. The container can have a realtive position, so the 
-button can be given absolute posiyion. This way is better using a container because it will keep the image
-and button together. */
-/* The design is not as responsive as of yet beause we are using 12 columns for all screen sizes. 
-Need to add media queries for responsive design. \*/
+  @keyframes slidedown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+    height: 100%; /* Ensure body height is maintained */
+  }
+  
+  .total-price {
+    display: flex;
+    justify-content: space-between;
+  }
+  .total-price .order-total {
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  .attribution {
+    margin: 1.5rem auto;
+    text-align: center;
+    background-color: var(--second-roseColor);
+    padding:1rem;
+  }
+  .attribution a {
+    text-decoration: none;
+    color: var(--main-redColor);
+  }
+  .attribution a:hover {
+    text-decoration: underline;
+  }
+ @media(min-width: 475px) and (max-width: 768px) {
+    main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    #cart-section{
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 38%;
+        padding: 1.5rem;
+    }
+    .modal-content {
+        margin: 3% auto; /* 15% from the top and centered */
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+   
+ } 
+@media (min-width:769px) and (max-width:1023px){
+    main {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .dessert-list {
+        grid-column: span 2;
+    }
+    .products-container{
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    #cart-section{
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 25%;
+        padding: 1.5rem;
+    }
+    .image-button .add-to-cart {
+        width:65%;
+        padding:0.6rem;
+    }
+  
+    .modal-content {
+        margin: 3% auto; /* 15% from the top and centered */
+        width: 50%; /* Could be more or less, depending on screen size */
+    }
+   
+}
+@media (min-width: 1024px) {
+    main {
+        display:grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+    }
+    .dessert-list {
+        grid-column: span 9;
+    }
+    .products-container{
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .image-button .add-to-cart {
+        width: 50%;
+    }
+    
+    #cart-section{
+        position: fixed;
+        top: 1.5rem;
+        right: 0;
+        width: 20%;
+    }
+
+    .modal-content {
+        margin: 3% auto; /* 15% from the top and centered */
+        width: 40%; /* Could be more or less, depending on screen size */
+    }
+   
+  }

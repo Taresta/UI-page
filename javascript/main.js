@@ -23,10 +23,21 @@ class Product {
     total() { return this._quantity * this._price; }
 }
 
+const productArray = [];
+let cart = []; // Changed to 'let' to allow reassignment
+
 function renderProduct(product, index) {
+    const currentWidth = window.innerWidth;
+
     const productHTML = `<div class="dessert ${product.category.toLowerCase()}" data-index="${index}">
                         <div class="image-button">
-                            <img src="${product.image.desktop}" alt="${product.name}"/>
+                            <picture>
+                                <source srcset="${product.image.mobile}" media="(max-width: 375px)">
+                                <source srcset="${product.image.tablet}" media="(min-width: 376px)and (max-width:768px)">
+                                <source srcset="${product.image.desktop}" media="(min-width: 769px)">
+                                <img src="${product.image.desktop}" alt="Product Image" class="product-image">
+                            </picture>
+
                             <div class="add-to-cart">
                                 <img src="./assets/images/icon-add-to-cart.svg" alt="Add to cart icon" class="add-icon">
                                 <span class="add-text">Add to Cart</span>
@@ -51,10 +62,9 @@ function renderProduct(product, index) {
                         <span class="dessert-price">$${product.price.toFixed(2)}</span>
                     </div>`;
     document.querySelector('.products-container').insertAdjacentHTML('beforeend', productHTML);
-}
 
-const productArray = [];
-let cart = []; // Changed to 'let' to allow reassignment
+   
+}
 
 fetch('../data.json')
     .then(response => response.json())
@@ -68,6 +78,7 @@ fetch('../data.json')
         console.log('Product Array:', JSON.stringify(productArray, null, 2));
     })
     .catch(error => console.error('Error loading JSON:', error));
+
 
 function attachAddToCartListener(product, index) {
     console.trace("attachAddToCartListener function called");
@@ -208,9 +219,10 @@ function updateProductUI(product, index) {
     if (product.quantity > 0) {
         detachProductToCartListener(product, index);
         addToCartButton.classList.add('active'); // Show increment and decrement buttons
+        document.querySelector(`.dessert[data-index = "${index}"] .product-image`).classList.add('show-border');
     } else {
         addToCartButton.classList.remove('active');
-    
+        document.querySelector(`.dessert[data-index = "${index}"] .product-image`).classList.remove('show-border');
         // Revert to 'Add to Cart' state
         setTimeout(() => {
            
@@ -243,7 +255,7 @@ function updateCartUI() {
                 <div class="cart-item-details">
                     <p class="cart-item-name">${product.name}</p>
                     <span class="cart-item-quantity">${product.quantity}x</span>
-                    <span class="cart-item-price">$${product.price.toFixed(2)}@</span>
+                    <span class="cart-item-price">@$${product.price.toFixed(2)}</span>
                     <span class="cart-item-total">$${product.total().toFixed(2)}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-remove-item" width="10px" height="10px" viewBox="0 0 8.75 8.75">
                         <defs>
@@ -272,7 +284,7 @@ function updateCartUI() {
 
         // Update the Order Summary
         orderSummary.innerHTML = `
-            <p>Order Total: $${totalPrice.toFixed(2)}</p>
+            <p class="total-price">Order Total:<span class="order-total">$${totalPrice.toFixed(2)}</span></p>
             <div id="carbon-neutral-container">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" fill="none" viewBox="0 0 21 20">
                     <path fill="#1EA575" d="M8 18.75H6.125V17.5H8V9.729L5.803 8.41l.644-1.072 2.196 1.318a1.256 1.256 0 0 1 .607 1.072V17.5A1.25 1.25 0 0 1 8 18.75Z"/>
@@ -361,8 +373,9 @@ orderSummary.addEventListener('click', (event) => {
 function displayCheckoutModal() {
     const modal = document.getElementById('checkout-modal');
     if (modal) {
-        modal.style.display = 'block';
+        modal.classList.add('show') // Add "show" class to trigger fade-in;
         displayOrderDetails();
+        document.body.classList.add('modal-open');
     } else {
         console.error('Checkout modal element not found');
     }
@@ -370,20 +383,23 @@ function displayCheckoutModal() {
 
 function displayOrderDetails() {
     const orderDetails = document.getElementById('order-details');
+    let total = 0;
 
     if (orderDetails) {
         orderDetails.innerHTML = '';
         cart.forEach(product => {
+            total += product.total();
             const orderDetailsHTML = `
                 <div class="order-item">
-                    <img src="${product.image.thumbnail || 'path/to/fallback/image.jpg'}" alt="${product.name}">
-                    <p>${product.name}</p>
-                    <span>${product.quantity}x</span>
-                    <span>@ $${product.price.toFixed(2)}</span>
-                    <span>Total: $${product.total().toFixed(2)}</span>
+                    <img src="${product.image.thumbnail || 'path/to/fallback/image.jpg'}" alt="${product.name}" class="modal-thumbail-image">
+                    <p class="modal-product-name">${product.name}</p>
+                    <span class="modal-product-quantity">${product.quantity}x</span>
+                    <span class="modal-product-price">@ $${product.price.toFixed(2)}</span>
+                    <span class="modal-product-total">$${product.total().toFixed(2)}</span>
                 </div>`;
             orderDetails.insertAdjacentHTML('beforeend', orderDetailsHTML);
         });
+        orderDetails.insertAdjacentHTML('beforeend', `<p class="total-price">Order Total:<span class="order-total">$${total.toFixed(2)}</span></p>`)
     } else {
         console.error('Order details element not found');
     }
@@ -406,7 +422,8 @@ function resetOrder() {
     })
     const modal = document.getElementById('checkout-modal');
     if (modal) {
-        modal.style.display = 'none';
+        modal.classList.remove('show');
+        document.body.classList.remove('modal-open');
     }
     console.log('Order has been reset');
 }

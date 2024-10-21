@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>The picture element</h1>
+
+<p>Resize the browser window to load different images.</p>
+
+<picture>
+  <source media="(min-width:650px)" srcset="../assets/images/image-cake-desktop.jpg">
+  <source media="(min-width:465px)" srcset="../assets/images/image-brownie-tablet.jpg">
+  <img src="../assets/images/image-baklava-mobile.jpg" alt="Flowers" style="width:auto;">
+</picture>
+
+</body>
+</html>
+
+
+@font-face {
+  font-family: "Red Hat Text";
+  src: url('../assets/fonts/RedHatText-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight:400 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Red Hat Text";
+  src: url('../assets/fonts/RedHatText-Italic-VariableFont_wght.ttf')  format('truetype-variations');
+  font-weight: 400 700;
+  font-style: italic;
+}
+:root {
+  --main-redColor: hsl(14, 86%, 42%);
+  --main-greenColor:  hsl(159, 69%, 38%);
+  --first-roseColor: hsl(20, 50%, 98%);
+  --second-roseColor:hsl(13, 31%, 94%);
+  --third-roseColor:hsl(14, 25%, 72%);
+  --fourth-roseColor: hsl(7, 20%, 60%);
+  --fifth-roseColor:hsl(12, 20%, 44%);
+  --sixth-roseColor:hsl(14, 65%, 9%);
+  --font-size: 16px;
+  --main-font: "Red Hat Text", sans-serif;
+}
+html {
+  font-family: var(--main-font), serif;
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: var(--first-roseColor);
+}
+
+main {
+  display: block;
+  width: 100%;
+}
+.dessert-list {
+  width : 100%;
+  display: block;
+}
+.dessert-list h2 {
+  font-size: clamp(1rem, 1.5rem + 1vw, 2rem);
+  color: var(--sixth-roseColor);
+}
+
+.products-container{
+  width: 100%; 
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1.5rem;
+}
+
+.dessert {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+  
+}
+
+@media (min-width:376px) and (max-width: 767px) {
+  main {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+  }
+  .dessert-list {
+      grid-column: span 2;
+  }
+  /* .image-button {
+      width:100%;
+      position:relative;
+      margin-bottom:1rem;
+   }
+   
+  .image-button img {
+      max-width: 100%;
+      
+   } */
+   .products-container{
+      width: auto; 
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1.5rem;
+  }
+  
+}
+ .image-button {
+  width:100%;
+  position:relative;
+  margin-bottom:1rem;
+}
+
+.image-button img {
+  max-width: 100%;
+  
+} 
+
+.image-button .add-to-cart {
+  display: flex;
+  justify-content: center;
+  width: 25%;
+  padding:1.5rem;
+  background-color: hsl(0, 0%, 100%); 
+  border: 1px solid var(--sixth-roseColor);
+  border-radius:2rem;
+  position: absolute;
+  left:50%;
+  bottom:0;
+  transform: translate(-50%,50%);
+  text-align: center;
+  
+}
+.add-to-cart:hover {
+  cursor:pointer;
+}
+.add-to-cart .add-icon {
+  padding-right: 0.5rem; 
+}
+.add-to-cart .add-text {
+  display:inline-block;
+  font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+  font-weight: 600;
+ 
+}
+/* Add styles for quantity modifier here */
+.add-to-cart .add-icon, 
+.add-to-cart .add-text {
+  display:inline-block;
+}
+.add-to-cart .quantity-control{
+  display:none;
+  
+}
+.add-to-cart.active .add-icon,
+.add-to-cart.active .add-text{
+  display:none;
+}
+.add-to-cart.active {
+  background-color: var(--main-redColor);
+}
+
+.add-to-cart.active .quantity-control{
+  flex-grow: 1;
+ display: flex;
+ justify-content: space-between;
+}
+
+.quantity-control .quantity-modifier{
+  padding:0.2rem;
+  border:2px solid white;
+  border-radius: 50%;
+}
+.quantity-modifier .cls-1 {
+  fill: white; 
+}
+.quantity-modifier:hover {
+  background-color: white;
+}
+.quantity-modifier:hover .cls-1{
+  fill: red;
+}
+.dessert-name {
+  color: var(--third-roseColor);
+}
+.dessert-full-name{
+  color:var(--sixth-roseColor);
+  font-weight:650;
+  font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+}
+.dessert-price {
+  color: var(--main-redColor);
+  font-weight: 500;
+}
+#cart-section{
+  position: static;
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+  /* grid-column: span 3;
+  padding: 0.5rem;
+  background-color: white; */
+}
+#cart-section h3 {
+  color: var(--main-redColor);
+  justify-self: start;
+}
+.cart-item .icon-remove-item {
+  cursor: pointer;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /*Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+  box-shadow:0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* When the modal is shown */
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 0; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+  animation: slidedown 0.5s ease-in-out;
+}
+@keyframes slidedown {
+  from {
+      transform: translateY(-50px);
+      opacity: 0;
+  }
+  to {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+  height: 100%; /* Ensure body height is maintained */
+}
+
+#order-details {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#order-details .order-item {
+  display: grid;
+  grid-template-columns:  1fr 1fr 2fr 1fr 1fr 1fr; 
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0px 10px;
+  align-items: center;
+  grid-template-areas: "Image Product-Name Product-Name . . Total"
+                      "Image Quantity Price . . Total"; 
+}
+
+.order-item .modal-thumbail-image {
+  grid-area: Image;
+}
+.order-item .modal-product-name {
+  grid-area: Product-Name;
+}
+.order-item .modal-product-quantity {
+  grid-area: Quantity;
+}
+.order-item .modal-product-price {
+  grid-area: Price;
+}
+.order-item .modal-product-total {
+  grid-area: Total;
+}
+.modal-total {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 1024px) {
+  main {
+      display:grid;
+      /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  This is just an alternative*/
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+  }
+  .dessert-list {
+      grid-column: span 9;
+  }
+  
+  .products-container{
+      width: 100%; 
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* grid-template-columns: repeat(12, 1fr); This is just an alternative*/
+      grid-template-rows: auto;
+      grid-gap: 1.5rem;
+  }
+  
+  /* .image-button {
+      position:relative;
+      margin-bottom:2.5rem;
+  }
+  
+  .image-button img {
+      width: auto;
+      
+  }
+   */
+  .image-button .add-to-cart {
+      width: 50%;
+      padding: 0.8rem 1.5rem;
+      
+  }
+  
+  #cart-section{
+      position: fixed;
+      top: 1.5rem;
+      right: 0;
+      width: 20%;
+      padding: 1.5rem;
+  }
+  
+  .modal {
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+  }
+  .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%; /* Could be more or less, depending on screen size */
+      animation: slidedown 0.5s ease-in-out;
+  }
+ 
+}
+

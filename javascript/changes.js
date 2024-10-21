@@ -337,6 +337,7 @@ function orderConfirmationModelPopUp() {
                                     <h2>Order Confirmed</h2>
                                     <p>We hope you enjoy your food</p>`;
     
+    
     //Append cart items summary
     cart.forEach(product => {
         const modelItemRow = document.createElement('div');
