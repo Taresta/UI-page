@@ -66,7 +66,7 @@ function renderProduct(product, index) {
    
 }
 
-fetch('../data.json')
+fetch('https://raw.githubusercontent.com/Taresta/UI-page/main/data.json')
     .then(response => response.json())
     .then(data => {
         data.forEach((item, index) => {
